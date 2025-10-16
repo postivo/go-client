@@ -1,0 +1,11 @@
+# ListContactsResponse
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `HTTPMeta`                                                                                 | [components.HTTPMetadata](../../models/components/httpmetadata.md)                         | :heavy_check_mark:                                                                         | N/A                                                                                        |
+| `ContactResponses`                                                                         | [][components.ContactResponse](../../models/components/contactresponse.md)                 | :heavy_minus_sign:                                                                         | The request was processed successfully. Contact details are included in the response body. |
+| `ErrorResponse`                                                                            | [*components.ErrorResponse](../../models/components/errorresponse.md)                      | :heavy_minus_sign:                                                                         | Invalid request.                                                                           |
+| `Headers`                                                                                  | map[string][]*string*                                                                      | :heavy_check_mark:                                                                         | N/A                                                                                        |

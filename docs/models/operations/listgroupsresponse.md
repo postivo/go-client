@@ -1,0 +1,10 @@
+# ListGroupsResponse
+
+
+## Fields
+
+| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `HTTPMeta`                                                                               | [components.HTTPMetadata](../../models/components/httpmetadata.md)                       | :heavy_check_mark:                                                                       | N/A                                                                                      |
+| `GroupResponses`                                                                         | [][components.GroupResponse](../../models/components/groupresponse.md)                   | :heavy_minus_sign:                                                                       | The request was processed successfully. Group details are included in the response body. |
+| `ErrorResponse`                                                                          | [*components.ErrorResponse](../../models/components/errorresponse.md)                    | :heavy_minus_sign:                                                                       | Invalid request.                                                                         |
