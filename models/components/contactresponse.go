@@ -33,6 +33,8 @@ type ContactResponse struct {
 	GroupIds optionalnullable.OptionalNullable[[]int64] `json:"group_ids,omitempty"`
 	// Unique system-assigned contact ID.
 	ID int64 `json:"id"`
+	// Indicates whether the contact data was inherited from a main account’s shared Address Book.
+	Inherited *bool `json:"inherited,omitempty"`
 }
 
 func (c ContactResponse) MarshalJSON() ([]byte, error) {
@@ -128,4 +130,11 @@ func (c *ContactResponse) GetID() int64 {
 		return 0
 	}
 	return c.ID
+}
+
+func (c *ContactResponse) GetInherited() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.Inherited
 }

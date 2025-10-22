@@ -14,6 +14,8 @@ type GroupResponse struct {
 	Description optionalnullable.OptionalNullable[string] `json:"description,omitempty"`
 	// Unique system-assigned group ID.
 	ID int64 `json:"id"`
+	// Indicates whether the group data was inherited from a main account’s shared Address Book.
+	Inherited *bool `json:"inherited,omitempty"`
 }
 
 func (g *GroupResponse) GetName() string {
@@ -35,4 +37,11 @@ func (g *GroupResponse) GetID() int64 {
 		return 0
 	}
 	return g.ID
+}
+
+func (g *GroupResponse) GetInherited() *bool {
+	if g == nil {
+		return nil
+	}
+	return g.Inherited
 }

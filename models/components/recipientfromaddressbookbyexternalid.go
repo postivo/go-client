@@ -11,8 +11,8 @@ import (
 type RecipientFromAddressBookByExternalID struct {
 	// External (custom) ID of the recipient stored in your Address Book.
 	ExtID string `json:"ext_id"`
-	// Set to true to fetch recipient data by external ID from a main account’s shared Address Book.
-	FromShared *bool `default:"false" json:"from_shared"`
+	// Set to true to fetch recipient data by external ID from inherited main account’s Address Book.
+	Inherited *bool `default:"false" json:"inherited"`
 	// Custom shipment ID assigned by the user.
 	CustomID optionalnullable.OptionalNullable[string] `default:"null" json:"custom_id"`
 	// Optional postscript printed above the recipient data on the envelope.
@@ -37,11 +37,11 @@ func (r *RecipientFromAddressBookByExternalID) GetExtID() string {
 	return r.ExtID
 }
 
-func (r *RecipientFromAddressBookByExternalID) GetFromShared() *bool {
+func (r *RecipientFromAddressBookByExternalID) GetInherited() *bool {
 	if r == nil {
 		return nil
 	}
-	return r.FromShared
+	return r.Inherited
 }
 
 func (r *RecipientFromAddressBookByExternalID) GetCustomID() optionalnullable.OptionalNullable[string] {
