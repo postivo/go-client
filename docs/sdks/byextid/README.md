@@ -1,5 +1,4 @@
-# ByExtID
-(*AddressBook.Contacts.ByExtID*)
+# AddressBook.Contacts.ByExtId
 
 ## Overview
 
@@ -49,7 +48,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
-| `extID`                                                  | *string*                                                 | :heavy_check_mark:                                       | External (custom) ID of the contact to fetch.            | my-ext-id-44                                             |
+| `extID`                                                  | `string`                                                 | :heavy_check_mark:                                       | External (custom) ID of the contact to fetch.            | my-ext-id-44                                             |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
 ### Response
@@ -117,7 +116,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
-| `extID`                                                  | *string*                                                 | :heavy_check_mark:                                       | External (custom) ID of the contact to update.           | my-id-2                                                  |
+| `extID`                                                  | `string`                                                 | :heavy_check_mark:                                       | External (custom) ID of the contact to update.           | my-id-2                                                  |
 | `contact`                                                | [components.Contact](../../models/components/contact.md) | :heavy_check_mark:                                       | A `Contact` object with the updated fields.              |                                                          |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
@@ -170,7 +169,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
-| `extID`                                                  | *string*                                                 | :heavy_check_mark:                                       | External (custom) ID of the contact to remove.           | my-id-2                                                  |
+| `extID`                                                  | `string`                                                 | :heavy_check_mark:                                       | External (custom) ID of the contact to remove.           | my-id-2                                                  |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
 ### Response
@@ -222,8 +221,8 @@ func main() {
 | Parameter                                                     | Type                                                          | Required                                                      | Description                                                   | Example                                                       |
 | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
 | `ctx`                                                         | [context.Context](https://pkg.go.dev/context#Context)         | :heavy_check_mark:                                            | The context to use for the request.                           |                                                               |
-| `extID`                                                       | *string*                                                      | :heavy_check_mark:                                            | External (custom) ID of the contact to detach from the group. | my-id-1                                                       |
-| `groupID`                                                     | *int64*                                                       | :heavy_check_mark:                                            | Group `id` to detach from the contact.                        | 656                                                           |
+| `extID`                                                       | `string`                                                      | :heavy_check_mark:                                            | External (custom) ID of the contact to detach from the group. | my-id-1                                                       |
+| `groupID`                                                     | `int64`                                                       | :heavy_check_mark:                                            | Group `id` to detach from the contact.                        | 656                                                           |
 | `opts`                                                        | [][operations.Option](../../models/operations/option.md)      | :heavy_minus_sign:                                            | The options for this request.                                 |                                                               |
 
 ### Response
@@ -278,8 +277,8 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
-| `extID`                                                  | *string*                                                 | :heavy_check_mark:                                       | External (custom) ID of the contact to add to the group. | my-id-1                                                  |
-| `groupID`                                                | *int64*                                                  | :heavy_check_mark:                                       | Group `id` to associate with the contact.                | 656                                                      |
+| `extID`                                                  | `string`                                                 | :heavy_check_mark:                                       | External (custom) ID of the contact to add to the group. | my-id-1                                                  |
+| `groupID`                                                | `int64`                                                  | :heavy_check_mark:                                       | Group `id` to associate with the contact.                | 656                                                      |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
 ### Response

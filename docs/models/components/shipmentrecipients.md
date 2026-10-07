@@ -17,3 +17,15 @@ shipmentRecipients := components.CreateShipmentRecipientsRecipients(components.R
 shipmentRecipients := components.CreateShipmentRecipientsArrayOfRecipients([]components.Recipients{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch shipmentRecipients.Type {
+	case components.ShipmentRecipientsTypeRecipients:
+		// shipmentRecipients.Recipients is populated
+	case components.ShipmentRecipientsTypeArrayOfRecipients:
+		// shipmentRecipients.ArrayOfRecipients is populated
+}
+```

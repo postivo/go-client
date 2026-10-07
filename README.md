@@ -240,7 +240,7 @@ func main() {
 * [Get](docs/sdks/accounts/README.md#get) - Retrieve account details
 * [GetSubaccount](docs/sdks/accounts/README.md#getsubaccount) - Get subaccount details
 
-#### [AddressBook.Contacts](docs/sdks/contacts/README.md)
+### [AddressBook.Contacts](docs/sdks/contacts/README.md)
 
 * [List](docs/sdks/contacts/README.md#list) - List contacts
 * [Add](docs/sdks/contacts/README.md#add) - Add a new contact
@@ -250,7 +250,7 @@ func main() {
 * [RemoveFromGroup](docs/sdks/contacts/README.md#removefromgroup) - Remove a contact from a group
 * [AddToGroup](docs/sdks/contacts/README.md#addtogroup) - Add a contact to a group
 
-#### [AddressBook.Contacts.ByExtID](docs/sdks/byextid/README.md)
+#### [AddressBook.Contacts.ByExtId](docs/sdks/byextid/README.md)
 
 * [Get](docs/sdks/byextid/README.md#get) - Retrieve contact details by EXT_ID
 * [Update](docs/sdks/byextid/README.md#update) - Update a contact by EXT_ID
@@ -258,7 +258,7 @@ func main() {
 * [RemoveFromGroup](docs/sdks/byextid/README.md#removefromgroup) - Remove a contact from a group by EXT_ID
 * [AddToGroup](docs/sdks/byextid/README.md#addtogroup) - Add a contact to a group by EXT_ID
 
-#### [AddressBook.Groups](docs/sdks/groups/README.md)
+### [AddressBook.Groups](docs/sdks/groups/README.md)
 
 * [List](docs/sdks/groups/README.md#list) - List groups
 * [Add](docs/sdks/groups/README.md#add) - Add a new group
@@ -466,7 +466,7 @@ func main() {
 	ctx := context.Background()
 
 	s := postivo.New(
-		postivo.WithServer("sandbox"),
+		postivo.WithServer("prod"),
 		postivo.WithSecurity("<YOUR API ACCESS TOKEN>"),
 	)
 

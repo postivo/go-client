@@ -1,5 +1,4 @@
 # Shipments
-(*Shipments*)
 
 ## Overview
 
@@ -51,7 +50,7 @@ func main() {
 | Parameter                                                                                                           | Type                                                                                                                | Required                                                                                                            | Description                                                                                                         |
 | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | `ctx`                                                                                                               | [context.Context](https://pkg.go.dev/context#Context)                                                               | :heavy_check_mark:                                                                                                  | The context to use for the request.                                                                                 |
-| `ids`                                                                                                               | []*string*                                                                                                          | :heavy_check_mark:                                                                                                  | Shipment IDs assigned by the system (comma-separated). The system accepts a maximum of **50** identifiers per call. |
+| `ids`                                                                                                               | []`string`                                                                                                          | :heavy_check_mark:                                                                                                  | Shipment IDs assigned by the system (comma-separated). The system accepts a maximum of **50** identifiers per call. |
 | `opts`                                                                                                              | [][operations.Option](../../models/operations/option.md)                                                            | :heavy_minus_sign:                                                                                                  | The options for this request.                                                                                       |
 
 ### Response
@@ -107,7 +106,7 @@ func main() {
 | Parameter                                                                                                           | Type                                                                                                                | Required                                                                                                            | Description                                                                                                         |
 | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | `ctx`                                                                                                               | [context.Context](https://pkg.go.dev/context#Context)                                                               | :heavy_check_mark:                                                                                                  | The context to use for the request.                                                                                 |
-| `ids`                                                                                                               | []*string*                                                                                                          | :heavy_check_mark:                                                                                                  | Shipment IDs assigned by the system (comma-separated). The system accepts a maximum of **50** identifiers per call. |
+| `ids`                                                                                                               | []`string`                                                                                                          | :heavy_check_mark:                                                                                                  | Shipment IDs assigned by the system (comma-separated). The system accepts a maximum of **50** identifiers per call. |
 | `opts`                                                                                                              | [][operations.Option](../../models/operations/option.md)                                                            | :heavy_minus_sign:                                                                                                  | The options for this request.                                                                                       |
 
 ### Response
@@ -127,9 +126,168 @@ Send a shipment to one or multiple recipients in a single request. Provide a `Sh
 
 The system accepts up to **50** recipients per call. For larger volumes, split the operation into multiple requests.
 
-### Example Usage
+### Example Usage: advanced_config
 
-<!-- UsageSnippet language="go" operationID="shipmentDispatch" method="post" path="/shipment" -->
+<!-- UsageSnippet language="go" operationID="shipmentDispatch" method="post" path="/shipment" example="advanced_config" -->
+```go
+package main
+
+import(
+	"context"
+	postivo "github.com/postivo/go-client"
+	"github.com/postivo/go-client/optionalnullable"
+	"github.com/postivo/go-client/models/components"
+	"github.com/postivo/go-client/types"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := postivo.New(
+        postivo.WithSecurity("<YOUR API ACCESS TOKEN>"),
+    )
+
+    res, err := s.Shipments.Dispatch(ctx, components.Shipment{
+        Recipients: components.CreateShipmentRecipientsRecipients(
+            components.CreateRecipientsRecipientInline(
+                components.RecipientInline{
+                    Name: postivo.Pointer("Jan Nowak"),
+                    Name2: optionalnullable.From(postivo.Pointer("Firma testowa Sp. z o.o.")),
+                    Address: postivo.Pointer("ul. Testowa"),
+                    HomeNumber: optionalnullable.From(postivo.Pointer("23")),
+                    FlatNumber: optionalnullable.From(postivo.Pointer("2")),
+                    PostCode: postivo.Pointer("00-999"),
+                    City: postivo.Pointer("Warszawa"),
+                    PhoneNumber: optionalnullable.From(postivo.Pointer("+48666666666")),
+                    Postscript: optionalnullable.From(postivo.Pointer("Komunikat")),
+                    CustomID: optionalnullable.From(postivo.Pointer("1234567890")),
+                },
+            ),
+        ),
+        Documents: components.CreateShipmentDocumentsDocuments(
+            components.CreateDocumentsDocumentPdf(
+                components.DocumentPdf{
+                    FileStream: "<document content encoded to base64>",
+                    FileName: optionalnullable.From(postivo.Pointer("document.pdf")),
+                },
+            ),
+        ),
+        Options: optionalnullable.From(postivo.Pointer(components.CreateOptionsObjShipmentOptions(
+            components.ShipmentOptions{
+                PredefinedConfigID: optionalnullable.From(postivo.Pointer[int64](2670)),
+                InlineConfig: optionalnullable.From(postivo.Pointer(components.CreateInlineConfigUnionInlineConfig(
+                    components.InlineConfig{
+                        CarrierID: 4,
+                        ServiceID: 16,
+                        PaperID: postivo.Pointer[int64](1),
+                        ColorPrint: postivo.Pointer(true),
+                        DuplexPrint: postivo.Pointer(false),
+                        EnvelopeID: postivo.Pointer[int64](454),
+                        EnvelopeColorPrint: postivo.Pointer(true),
+                    },
+                ))),
+                SenderID: optionalnullable.From(postivo.Pointer[int64](1)),
+                DispatchDate: types.MustNewDateFromString("2025-10-21"),
+                Callback: optionalnullable.From(postivo.Pointer(components.CreateCallbackUnionCallback(
+                    components.Callback{
+                        URL: "https://example.com/test",
+                        UserToken: optionalnullable.From(postivo.Pointer("75gh28hugjy8gfv6...")),
+                    },
+                ))),
+                MiscInfo: optionalnullable.From(postivo.Pointer(components.CreateMiscInfoUnionMiscInfo(
+                    components.MiscInfo{
+                        Mpk: optionalnullable.From(postivo.Pointer("dział sprzedaży")),
+                        OrderName: optionalnullable.From(postivo.Pointer("Wysyłka zaproszeń do Klientów")),
+                    },
+                ))),
+                RotateDocuments: postivo.Pointer(true),
+            },
+        ))),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.ShipmentDetails != nil {
+        // handle response
+    }
+}
+```
+### Example Usage: multi
+
+<!-- UsageSnippet language="go" operationID="shipmentDispatch" method="post" path="/shipment" example="multi" -->
+```go
+package main
+
+import(
+	"context"
+	postivo "github.com/postivo/go-client"
+	"github.com/postivo/go-client/optionalnullable"
+	"github.com/postivo/go-client/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := postivo.New(
+        postivo.WithSecurity("<YOUR API ACCESS TOKEN>"),
+    )
+
+    res, err := s.Shipments.Dispatch(ctx, components.Shipment{
+        Recipients: components.CreateShipmentRecipientsArrayOfRecipients(
+            []components.Recipients{
+                components.CreateRecipientsRecipientInline(
+                    components.RecipientInline{
+                        Name: postivo.Pointer("Jan Nowak"),
+                        Name2: optionalnullable.From(postivo.Pointer("Firma testowa Sp. z o.o.")),
+                        Address: postivo.Pointer("ul. Testowa"),
+                        HomeNumber: optionalnullable.From(postivo.Pointer("23")),
+                        FlatNumber: optionalnullable.From(postivo.Pointer("2")),
+                        PostCode: postivo.Pointer("00-999"),
+                        City: postivo.Pointer("Warszawa"),
+                        PhoneNumber: optionalnullable.From(postivo.Pointer("+48666666666")),
+                        Postscript: optionalnullable.From(postivo.Pointer("Komunikat")),
+                        CustomID: optionalnullable.From(postivo.Pointer("1234567890")),
+                    },
+                ),
+                components.CreateRecipientsRecipientInline(
+                    components.RecipientInline{
+                        Name: postivo.Pointer("Andrzej Kowalski"),
+                        Address: postivo.Pointer("ul. Przykładowa 45/321"),
+                        PostCode: postivo.Pointer("34-001"),
+                        City: postivo.Pointer("Kraków"),
+                        PhoneNumber: optionalnullable.From(postivo.Pointer("+48999888777")),
+                        CustomID: optionalnullable.From(postivo.Pointer("my-id-1113")),
+                    },
+                ),
+            },
+        ),
+        Documents: components.CreateShipmentDocumentsDocuments(
+            components.CreateDocumentsDocumentPdf(
+                components.DocumentPdf{
+                    FileStream: "<document content encoded to base64>",
+                    FileName: optionalnullable.From(postivo.Pointer("document.pdf")),
+                },
+            ),
+        ),
+        Options: optionalnullable.From(postivo.Pointer(components.CreateOptionsObjShipmentOptions(
+            components.ShipmentOptions{
+                PredefinedConfigID: optionalnullable.From(postivo.Pointer[int64](2670)),
+            },
+        ))),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.ShipmentDetails != nil {
+        // handle response
+    }
+}
+```
+### Example Usage: single
+
+<!-- UsageSnippet language="go" operationID="shipmentDispatch" method="post" path="/shipment" example="single" -->
 ```go
 package main
 
@@ -254,7 +412,7 @@ func main() {
 | Parameter                                                                | Type                                                                     | Required                                                                 | Description                                                              | Example                                                                  |
 | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
 | `ctx`                                                                    | [context.Context](https://pkg.go.dev/context#Context)                    | :heavy_check_mark:                                                       | The context to use for the request.                                      |                                                                          |
-| `id`                                                                     | *string*                                                                 | :heavy_check_mark:                                                       | Single shipment ID assigned by the system when the shipment was created. | A0043456                                                                 |
+| `id`                                                                     | `string`                                                                 | :heavy_check_mark:                                                       | Single shipment ID assigned by the system when the shipment was created. | A0043456                                                                 |
 | `type_`                                                                  | [operations.DocumentType](../../models/operations/documenttype.md)       | :heavy_check_mark:                                                       | Type of document/certificate to generate.                                | dispatch_cert                                                            |
 | `opts`                                                                   | [][operations.Option](../../models/operations/option.md)                 | :heavy_minus_sign:                                                       | The options for this request.                                            |                                                                          |
 
@@ -275,9 +433,153 @@ Check the price of a shipment for one or multiple recipients. Provide a `Shipmen
 
 The system accepts up to **50** recipients per call. For larger volumes, split the operation into multiple requests.
 
-### Example Usage
+### Example Usage: advanced_config
 
-<!-- UsageSnippet language="go" operationID="shipmentPrice" method="post" path="/shipment/price" -->
+<!-- UsageSnippet language="go" operationID="shipmentPrice" method="post" path="/shipment/price" example="advanced_config" -->
+```go
+package main
+
+import(
+	"context"
+	postivo "github.com/postivo/go-client"
+	"github.com/postivo/go-client/optionalnullable"
+	"github.com/postivo/go-client/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := postivo.New(
+        postivo.WithSecurity("<YOUR API ACCESS TOKEN>"),
+    )
+
+    res, err := s.Shipments.Price(ctx, components.Shipment{
+        Recipients: components.CreateShipmentRecipientsRecipients(
+            components.CreateRecipientsRecipientInline(
+                components.RecipientInline{
+                    Name: postivo.Pointer("Jan Nowak"),
+                    Name2: optionalnullable.From(postivo.Pointer("Firma testowa Sp. z o.o.")),
+                    Address: postivo.Pointer("ul. Testowa"),
+                    HomeNumber: optionalnullable.From(postivo.Pointer("23")),
+                    FlatNumber: optionalnullable.From(postivo.Pointer("2")),
+                    PostCode: postivo.Pointer("00-999"),
+                    City: postivo.Pointer("Warszawa"),
+                    PhoneNumber: optionalnullable.From(postivo.Pointer("+48666666666")),
+                    Postscript: optionalnullable.From(postivo.Pointer("Komunikat")),
+                    CustomID: optionalnullable.From(postivo.Pointer("1234567890")),
+                },
+            ),
+        ),
+        Documents: components.CreateShipmentDocumentsDocuments(
+            components.CreateDocumentsDocumentPdf(
+                components.DocumentPdf{
+                    FileStream: "<document content encoded to base64>",
+                    FileName: optionalnullable.From(postivo.Pointer("document.pdf")),
+                },
+            ),
+        ),
+        Options: optionalnullable.From(postivo.Pointer(components.CreateOptionsObjShipmentOptions(
+            components.ShipmentOptions{
+                PredefinedConfigID: optionalnullable.From(postivo.Pointer[int64](2670)),
+                InlineConfig: optionalnullable.From(postivo.Pointer(components.CreateInlineConfigUnionInlineConfig(
+                    components.InlineConfig{
+                        CarrierID: 4,
+                        ServiceID: 16,
+                        PaperID: postivo.Pointer[int64](1),
+                        ColorPrint: postivo.Pointer(true),
+                        DuplexPrint: postivo.Pointer(false),
+                        EnvelopeID: postivo.Pointer[int64](454),
+                        EnvelopeColorPrint: postivo.Pointer(true),
+                    },
+                ))),
+                SenderID: optionalnullable.From(postivo.Pointer[int64](1)),
+            },
+        ))),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.ShipmentPrices != nil {
+        // handle response
+    }
+}
+```
+### Example Usage: multi
+
+<!-- UsageSnippet language="go" operationID="shipmentPrice" method="post" path="/shipment/price" example="multi" -->
+```go
+package main
+
+import(
+	"context"
+	postivo "github.com/postivo/go-client"
+	"github.com/postivo/go-client/optionalnullable"
+	"github.com/postivo/go-client/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := postivo.New(
+        postivo.WithSecurity("<YOUR API ACCESS TOKEN>"),
+    )
+
+    res, err := s.Shipments.Price(ctx, components.Shipment{
+        Recipients: components.CreateShipmentRecipientsArrayOfRecipients(
+            []components.Recipients{
+                components.CreateRecipientsRecipientInline(
+                    components.RecipientInline{
+                        Name: postivo.Pointer("Jan Nowak"),
+                        Name2: optionalnullable.From(postivo.Pointer("Firma testowa Sp. z o.o.")),
+                        Address: postivo.Pointer("ul. Testowa"),
+                        HomeNumber: optionalnullable.From(postivo.Pointer("23")),
+                        FlatNumber: optionalnullable.From(postivo.Pointer("2")),
+                        PostCode: postivo.Pointer("00-999"),
+                        City: postivo.Pointer("Warszawa"),
+                        PhoneNumber: optionalnullable.From(postivo.Pointer("+48666666666")),
+                        Postscript: optionalnullable.From(postivo.Pointer("Komunikat")),
+                        CustomID: optionalnullable.From(postivo.Pointer("1234567890")),
+                    },
+                ),
+                components.CreateRecipientsRecipientInline(
+                    components.RecipientInline{
+                        Name: postivo.Pointer("Andrzej Kowalski"),
+                        Address: postivo.Pointer("ul. Przykładowa 45/321"),
+                        PostCode: postivo.Pointer("34-001"),
+                        City: postivo.Pointer("Kraków"),
+                        PhoneNumber: optionalnullable.From(postivo.Pointer("+48999888777")),
+                        CustomID: optionalnullable.From(postivo.Pointer("my-id-1113")),
+                    },
+                ),
+            },
+        ),
+        Documents: components.CreateShipmentDocumentsDocuments(
+            components.CreateDocumentsDocumentPdf(
+                components.DocumentPdf{
+                    FileStream: "<document content encoded to base64>",
+                    FileName: optionalnullable.From(postivo.Pointer("document.pdf")),
+                },
+            ),
+        ),
+        Options: optionalnullable.From(postivo.Pointer(components.CreateOptionsObjShipmentOptions(
+            components.ShipmentOptions{
+                PredefinedConfigID: optionalnullable.From(postivo.Pointer[int64](2670)),
+            },
+        ))),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.ShipmentPrices != nil {
+        // handle response
+    }
+}
+```
+### Example Usage: single
+
+<!-- UsageSnippet language="go" operationID="shipmentPrice" method="post" path="/shipment/price" example="single" -->
 ```go
 package main
 

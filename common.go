@@ -66,7 +66,6 @@ func (s *Common) Ping(ctx context.Context, opts ...operations.Option) (*operatio
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "ping",
-		OAuth2Scopes:     nil,
 		SecuritySource:   nil,
 	}
 
@@ -179,7 +178,7 @@ func (s *Common) Ping(ctx context.Context, opts ...operations.Option) (*operatio
 
 			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"400", "4XX", "503", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err
@@ -235,7 +234,7 @@ func (s *Common) Ping(ctx context.Context, opts ...operations.Option) (*operatio
 
 			var out apierrors.ErrorResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
+				return nil, apierrors.NewResponseValidationError("response did not match the declared error schema", httpRes.StatusCode, string(rawBody), httpRes, err)
 			}
 
 			out.HTTPMeta = components.HTTPMetadata{
@@ -262,7 +261,7 @@ func (s *Common) Ping(ctx context.Context, opts ...operations.Option) (*operatio
 
 			var out apierrors.ErrorResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
+				return nil, apierrors.NewResponseValidationError("response did not match the declared error schema", httpRes.StatusCode, string(rawBody), httpRes, err)
 			}
 
 			out.HTTPMeta = components.HTTPMetadata{

@@ -7,4 +7,4 @@ Mock document used to simulate page count for pricing without uploading a real f
 
 | Field                                 | Type                                  | Required                              | Description                           | Example                               |
 | ------------------------------------- | ------------------------------------- | ------------------------------------- | ------------------------------------- | ------------------------------------- |
-| `Pages`                               | *int64*                               | :heavy_check_mark:                    | Number of pages in the mock document. | 3                                     |
+| `Pages`                               | `int64`                               | :heavy_check_mark:                    | Number of pages in the mock document. | 3                                     |

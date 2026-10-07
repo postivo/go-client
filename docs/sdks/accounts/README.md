@@ -1,5 +1,4 @@
 # Accounts
-(*Accounts*)
 
 ## Overview
 
@@ -99,7 +98,7 @@ func main() {
 | Parameter                                                  | Type                                                       | Required                                                   | Description                                                | Example                                                    |
 | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |
 | `ctx`                                                      | [context.Context](https://pkg.go.dev/context#Context)      | :heavy_check_mark:                                         | The context to use for the request.                        |                                                            |
-| `userLogin`                                                | *string*                                                   | :heavy_check_mark:                                         | Login of the subaccount (user) for which to retrieve data. | some-login                                                 |
+| `userLogin`                                                | `string`                                                   | :heavy_check_mark:                                         | Login of the subaccount (user) for which to retrieve data. | some-login                                                 |
 | `opts`                                                     | [][operations.Option](../../models/operations/option.md)   | :heavy_minus_sign:                                         | The options for this request.                              |                                                            |
 
 ### Response

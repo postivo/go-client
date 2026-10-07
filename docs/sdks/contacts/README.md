@@ -1,5 +1,4 @@
-# Contacts
-(*AddressBook.Contacts*)
+# AddressBook.Contacts
 
 ## Overview
 
@@ -51,8 +50,8 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
-| `page`                                                   | **int64*                                                 | :heavy_minus_sign:                                       | Page number of results                                   | 1                                                        |
-| `limit`                                                  | **int64*                                                 | :heavy_minus_sign:                                       | Results limit per page.                                  | 10                                                       |
+| `page`                                                   | `*int64`                                                 | :heavy_minus_sign:                                       | Page number of results                                   | 1                                                        |
+| `limit`                                                  | `*int64`                                                 | :heavy_minus_sign:                                       | Results limit per page.                                  | 10                                                       |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
 ### Response
@@ -172,7 +171,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
-| `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | Global contact `id` to fetch.                            | 14                                                       |
+| `id`                                                     | `int64`                                                  | :heavy_check_mark:                                       | Global contact `id` to fetch.                            | 14                                                       |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
 ### Response
@@ -240,7 +239,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
-| `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | ID of the contact to update.                             | 14                                                       |
+| `id`                                                     | `int64`                                                  | :heavy_check_mark:                                       | ID of the contact to update.                             | 14                                                       |
 | `contact`                                                | [components.Contact](../../models/components/contact.md) | :heavy_check_mark:                                       | A `Contact` object with the updated fields.              |                                                          |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
@@ -293,7 +292,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
-| `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | Global contact `id` to remove.                           | 14                                                       |
+| `id`                                                     | `int64`                                                  | :heavy_check_mark:                                       | Global contact `id` to remove.                           | 14                                                       |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
 ### Response
@@ -347,8 +346,8 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
-| `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | Global contact `id` to detach from the group.            | 35                                                       |
-| `groupID`                                                | *int64*                                                  | :heavy_check_mark:                                       | Group `id` to detach from the contact.                   | 656                                                      |
+| `id`                                                     | `int64`                                                  | :heavy_check_mark:                                       | Global contact `id` to detach from the group.            | 35                                                       |
+| `groupID`                                                | `int64`                                                  | :heavy_check_mark:                                       | Group `id` to detach from the contact.                   | 656                                                      |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
 ### Response
@@ -403,8 +402,8 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
-| `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | Global contact `id` to add to the group.                 | 35                                                       |
-| `groupID`                                                | *int64*                                                  | :heavy_check_mark:                                       | Group `id` to associate with the contact.                | 656                                                      |
+| `id`                                                     | `int64`                                                  | :heavy_check_mark:                                       | Global contact `id` to add to the group.                 | 35                                                       |
+| `groupID`                                                | `int64`                                                  | :heavy_check_mark:                                       | Group `id` to associate with the contact.                | 656                                                      |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
 ### Response

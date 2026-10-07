@@ -19,8 +19,8 @@ const (
 
 // ShipmentRecipients - Recipient data for a single shipment. For one recipient, provide a `RecipientInline`, `RecipientFromAddressBook`, or `RecipientFromAddressBookByExternalId` object. For multiple recipients, provide an array of these objects (1–50).
 type ShipmentRecipients struct {
-	Recipients        *Recipients  `queryParam:"inline,name=recipients"`
-	ArrayOfRecipients []Recipients `queryParam:"inline,name=recipients"`
+	Recipients        *Recipients  `queryParam:"inline" union:"member"`
+	ArrayOfRecipients []Recipients `queryParam:"inline" union:"member"`
 
 	Type ShipmentRecipientsType
 }
@@ -43,7 +43,14 @@ func CreateShipmentRecipientsArrayOfRecipients(arrayOfRecipients []Recipients) S
 	}
 }
 
-func (u *ShipmentRecipients) UnmarshalJSON(data []byte) error {
+func (u *ShipmentRecipients) UnmarshalJSON(data []byte) (err error) {
+	previous := *u
+	*u = ShipmentRecipients{}
+	defer func() {
+		if err != nil {
+			*u = previous
+		}
+	}()
 
 	var recipients Recipients = Recipients{}
 	if err := utils.UnmarshalJSON(data, &recipients, "", true, nil); err == nil {
@@ -83,8 +90,8 @@ const (
 
 // ShipmentDocuments - Document payload to print and enclose into shipment. For a single document, provide `DocumentPdf`, `DocumentLibrary`, or `DocumentMock` (for checking the price only). For multiple documents, provide an array of `DocumentPdf`, `DocumentLibrary`, or `DocumentMock` objects (1–20).
 type ShipmentDocuments struct {
-	Documents        *Documents  `queryParam:"inline,name=documents"`
-	ArrayOfDocuments []Documents `queryParam:"inline,name=documents"`
+	Documents        *Documents  `queryParam:"inline" union:"member"`
+	ArrayOfDocuments []Documents `queryParam:"inline" union:"member"`
 
 	Type ShipmentDocumentsType
 }
@@ -107,7 +114,14 @@ func CreateShipmentDocumentsArrayOfDocuments(arrayOfDocuments []Documents) Shipm
 	}
 }
 
-func (u *ShipmentDocuments) UnmarshalJSON(data []byte) error {
+func (u *ShipmentDocuments) UnmarshalJSON(data []byte) (err error) {
+	previous := *u
+	*u = ShipmentDocuments{}
+	defer func() {
+		if err != nil {
+			*u = previous
+		}
+	}()
 
 	var documents Documents = Documents{}
 	if err := utils.UnmarshalJSON(data, &documents, "", true, nil); err == nil {
@@ -223,7 +237,7 @@ const (
 )
 
 type InlineConfigUnion struct {
-	InlineConfig *InlineConfig `queryParam:"inline,name=inline_config"`
+	InlineConfig *InlineConfig `queryParam:"inline" union:"member"`
 
 	Type InlineConfigUnionType
 }
@@ -237,7 +251,14 @@ func CreateInlineConfigUnionInlineConfig(inlineConfig InlineConfig) InlineConfig
 	}
 }
 
-func (u *InlineConfigUnion) UnmarshalJSON(data []byte) error {
+func (u *InlineConfigUnion) UnmarshalJSON(data []byte) (err error) {
+	previous := *u
+	*u = InlineConfigUnion{}
+	defer func() {
+		if err != nil {
+			*u = previous
+		}
+	}()
 
 	var inlineConfig InlineConfig = InlineConfig{}
 	if err := utils.UnmarshalJSON(data, &inlineConfig, "", true, nil); err == nil {
@@ -297,7 +318,7 @@ const (
 )
 
 type CallbackUnion struct {
-	Callback *Callback `queryParam:"inline,name=callback"`
+	Callback *Callback `queryParam:"inline" union:"member"`
 
 	Type CallbackUnionType
 }
@@ -311,7 +332,14 @@ func CreateCallbackUnionCallback(callback Callback) CallbackUnion {
 	}
 }
 
-func (u *CallbackUnion) UnmarshalJSON(data []byte) error {
+func (u *CallbackUnion) UnmarshalJSON(data []byte) (err error) {
+	previous := *u
+	*u = CallbackUnion{}
+	defer func() {
+		if err != nil {
+			*u = previous
+		}
+	}()
 
 	var callback Callback = Callback{}
 	if err := utils.UnmarshalJSON(data, &callback, "", true, nil); err == nil {
@@ -371,7 +399,7 @@ const (
 )
 
 type MiscInfoUnion struct {
-	MiscInfo *MiscInfo `queryParam:"inline,name=misc_info"`
+	MiscInfo *MiscInfo `queryParam:"inline" union:"member"`
 
 	Type MiscInfoUnionType
 }
@@ -385,7 +413,14 @@ func CreateMiscInfoUnionMiscInfo(miscInfo MiscInfo) MiscInfoUnion {
 	}
 }
 
-func (u *MiscInfoUnion) UnmarshalJSON(data []byte) error {
+func (u *MiscInfoUnion) UnmarshalJSON(data []byte) (err error) {
+	previous := *u
+	*u = MiscInfoUnion{}
+	defer func() {
+		if err != nil {
+			*u = previous
+		}
+	}()
 
 	var miscInfo MiscInfo = MiscInfo{}
 	if err := utils.UnmarshalJSON(data, &miscInfo, "", true, nil); err == nil {
@@ -487,7 +522,7 @@ const (
 )
 
 type OptionsObj struct {
-	ShipmentOptions *ShipmentOptions `queryParam:"inline,name=options"`
+	ShipmentOptions *ShipmentOptions `queryParam:"inline" union:"member"`
 
 	Type OptionsObjType
 }
@@ -501,7 +536,14 @@ func CreateOptionsObjShipmentOptions(shipmentOptions ShipmentOptions) OptionsObj
 	}
 }
 
-func (u *OptionsObj) UnmarshalJSON(data []byte) error {
+func (u *OptionsObj) UnmarshalJSON(data []byte) (err error) {
+	previous := *u
+	*u = OptionsObj{}
+	defer func() {
+		if err != nil {
+			*u = previous
+		}
+	}()
 
 	var shipmentOptions ShipmentOptions = ShipmentOptions{}
 	if err := utils.UnmarshalJSON(data, &shipmentOptions, "", true, nil); err == nil {

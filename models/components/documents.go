@@ -18,9 +18,9 @@ const (
 
 // Documents - A base document object.
 type Documents struct {
-	DocumentPdf     *DocumentPdf     `queryParam:"inline,name=Documents"`
-	DocumentLibrary *DocumentLibrary `queryParam:"inline,name=Documents"`
-	DocumentMock    *DocumentMock    `queryParam:"inline,name=Documents"`
+	DocumentPdf     *DocumentPdf     `queryParam:"inline" union:"member"`
+	DocumentLibrary *DocumentLibrary `queryParam:"inline" union:"member"`
+	DocumentMock    *DocumentMock    `queryParam:"inline" union:"member"`
 
 	Type DocumentsType
 }
@@ -52,7 +52,14 @@ func CreateDocumentsDocumentMock(documentMock DocumentMock) Documents {
 	}
 }
 
-func (u *Documents) UnmarshalJSON(data []byte) error {
+func (u *Documents) UnmarshalJSON(data []byte) (err error) {
+	previous := *u
+	*u = Documents{}
+	defer func() {
+		if err != nil {
+			*u = previous
+		}
+	}()
 
 	var documentPdf DocumentPdf = DocumentPdf{}
 	if err := utils.UnmarshalJSON(data, &documentPdf, "", true, nil); err == nil {

@@ -1,5 +1,4 @@
-# Groups
-(*AddressBook.Groups*)
+# AddressBook.Groups
 
 ## Overview
 
@@ -157,7 +156,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
-| `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | Group id to fetch                                        | 194                                                      |
+| `id`                                                     | `int64`                                                  | :heavy_check_mark:                                       | Group id to fetch                                        | 194                                                      |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
 ### Response
@@ -214,7 +213,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
-| `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | Group `id` to update.                                    | 14                                                       |
+| `id`                                                     | `int64`                                                  | :heavy_check_mark:                                       | Group `id` to update.                                    | 14                                                       |
 | `group`                                                  | [components.Group](../../models/components/group.md)     | :heavy_check_mark:                                       | A `Group` object with the updated fields.                |                                                          |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
@@ -270,7 +269,7 @@ func main() {
 | Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               | Example                                                                   |
 | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | `ctx`                                                                     | [context.Context](https://pkg.go.dev/context#Context)                     | :heavy_check_mark:                                                        | The context to use for the request.                                       |                                                                           |
-| `id`                                                                      | *int64*                                                                   | :heavy_check_mark:                                                        | Group `id` to remove.                                                     | 876                                                                       |
+| `id`                                                                      | `int64`                                                                   | :heavy_check_mark:                                                        | Group `id` to remove.                                                     | 876                                                                       |
 | `contacts`                                                                | [*operations.ContactHandling](../../models/operations/contacthandling.md) | :heavy_minus_sign:                                                        | How to handle contacts that belong to the group.                          |                                                                           |
 | `opts`                                                                    | [][operations.Option](../../models/operations/option.md)                  | :heavy_minus_sign:                                                        | The options for this request.                                             |                                                                           |
 

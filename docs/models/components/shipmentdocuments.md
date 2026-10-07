@@ -17,3 +17,15 @@ shipmentDocuments := components.CreateShipmentDocumentsDocuments(components.Docu
 shipmentDocuments := components.CreateShipmentDocumentsArrayOfDocuments([]components.Documents{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch shipmentDocuments.Type {
+	case components.ShipmentDocumentsTypeDocuments:
+		// shipmentDocuments.Documents is populated
+	case components.ShipmentDocumentsTypeArrayOfDocuments:
+		// shipmentDocuments.ArrayOfDocuments is populated
+}
+```

@@ -2,7 +2,7 @@
 
 package postivo
 
-// Generated from OpenAPI doc version 1.0.2 and generator version 2.728.0
+// Generated from OpenAPI doc version 1.0.4 and generator version 2.943.0
 
 import (
 	"context"
@@ -71,7 +71,7 @@ type Client struct {
 
 type SDKOption func(*Client)
 
-// WithServerURL allows the overriding of the default server URL
+// WithServerURL allows providing an alternative server URL
 func WithServerURL(serverURL string) SDKOption {
 	return func(sdk *Client) {
 		sdk.sdkConfiguration.ServerURL = serverURL
@@ -141,10 +141,13 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *Client {
 	sdk := &Client{
-		SDKVersion: "0.1.0",
+		SDKVersion: "0.3.1",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 0.1.0 2.728.0 1.0.2 github.com/postivo/go-client",
-			ServerList: ServerList,
+			UserAgent:         "speakeasy-sdk/go 0.3.1 2.943.0 1.0.4 github.com/postivo/go-client",
+			SDKVersion:        "0.3.1",
+			GenVersion:        "2.943.0",
+			OpenAPIDocVersion: "1.0.4",
+			ServerList:        ServerList,
 		},
 		hooks: hooks.New(),
 	}

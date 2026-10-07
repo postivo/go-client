@@ -18,9 +18,9 @@ const (
 
 // Recipients - A base recipient object.
 type Recipients struct {
-	RecipientInline                      *RecipientInline                      `queryParam:"inline,name=Recipients"`
-	RecipientFromAddressBook             *RecipientFromAddressBook             `queryParam:"inline,name=Recipients"`
-	RecipientFromAddressBookByExternalID *RecipientFromAddressBookByExternalID `queryParam:"inline,name=Recipients"`
+	RecipientInline                      *RecipientInline                      `queryParam:"inline" union:"member"`
+	RecipientFromAddressBook             *RecipientFromAddressBook             `queryParam:"inline" union:"member"`
+	RecipientFromAddressBookByExternalID *RecipientFromAddressBookByExternalID `queryParam:"inline" union:"member"`
 
 	Type RecipientsType
 }
@@ -52,7 +52,14 @@ func CreateRecipientsRecipientFromAddressBookByExternalID(recipientFromAddressBo
 	}
 }
 
-func (u *Recipients) UnmarshalJSON(data []byte) error {
+func (u *Recipients) UnmarshalJSON(data []byte) (err error) {
+	previous := *u
+	*u = Recipients{}
+	defer func() {
+		if err != nil {
+			*u = previous
+		}
+	}()
 
 	var recipientInline RecipientInline = RecipientInline{}
 	if err := utils.UnmarshalJSON(data, &recipientInline, "", true, nil); err == nil {
