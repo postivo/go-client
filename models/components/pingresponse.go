@@ -2,9 +2,9 @@
 
 package components
 
-// PingResponse - Ping response.
+// PingResponse - Postivo service availability and current API version.
 type PingResponse struct {
-	// API service status: OK (available), ERR (unavailable).
+	// API service status. A successful ping returns OK.
 	Status *string `json:"status,omitempty"`
 	// Current API version.
 	Version *string `json:"version,omitempty"`

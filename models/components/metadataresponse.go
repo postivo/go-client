@@ -177,7 +177,7 @@ func (s *StatusCode) GetDescription() *string {
 	return s.Description
 }
 
-// MetadataResponse - Metadata response.
+// MetadataResponse - Available carriers, services, paper types, envelopes and other shipment configuration data.
 type MetadataResponse struct {
 	// List of carriers and their available services.
 	Carriers optionalnullable.OptionalNullable[[]MetadataResponseCarrier] `json:"carriers,omitempty"`

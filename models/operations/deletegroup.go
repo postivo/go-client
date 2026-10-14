@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"github.com/postivo/go-client/internal/utils"
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 // ContactHandling - How to handle contacts that belong to the group.
@@ -73,9 +72,7 @@ func (d *DeleteGroupRequest) GetContacts() *ContactHandling {
 
 type DeleteGroupResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
-	Headers       map[string][]string
+	Headers  map[string][]string
 }
 
 func (d *DeleteGroupResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -83,13 +80,6 @@ func (d *DeleteGroupResponse) GetHTTPMeta() components.HTTPMetadata {
 		return components.HTTPMetadata{}
 	}
 	return d.HTTPMeta
-}
-
-func (d *DeleteGroupResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
-	if d == nil {
-		return nil
-	}
-	return d.ErrorResponse
 }
 
 func (d *DeleteGroupResponse) GetHeaders() map[string][]string {

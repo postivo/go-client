@@ -4,16 +4,13 @@ package operations
 
 import (
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 type ShipmentDispatchResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// The request was processed successfully. Check the statuses of individual shipments in the response body.
 	ShipmentDetails []components.ShipmentDetails
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
-	Headers       map[string][]string
+	Headers         map[string][]string
 }
 
 func (s *ShipmentDispatchResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -28,13 +25,6 @@ func (s *ShipmentDispatchResponse) GetShipmentDetails() []components.ShipmentDet
 		return nil
 	}
 	return s.ShipmentDetails
-}
-
-func (s *ShipmentDispatchResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
-	if s == nil {
-		return nil
-	}
-	return s.ErrorResponse
 }
 
 func (s *ShipmentDispatchResponse) GetHeaders() map[string][]string {

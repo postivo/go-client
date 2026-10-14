@@ -11,7 +11,7 @@
 
 ## List
 
-Retrieve the list of allowed senders defined in your account. Senders are registered in your account and must be verified and activated before use. Activated senders have `active: true` property and can be used to send shipments. Inactive senders are also returned (`active: false`), but cannot be used until activated.
+Retrieve the senders defined in your account. Active, verified senders can be used for shipments. Inactive senders are also included in the list.
 
 ### Example Usage
 
@@ -57,12 +57,15 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 400, 401, 403, 4XX       | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 400, 403, 4XX            | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |
 
 ## Add
 
-Create a new sender on your account. The request must contain a `Sender` object. To prevent fraud, all additional senders are verified by mailing a verification code to the sender’s address. Complete the verification using the `verifySender` method. Verified senders have `active: true` and can be used to send shipments. Inactive senders are also returned (`active: false`), but cannot be used until verification is completed.
+Create a sender using its address details. Additional senders are verified by mailing a verification code to the sender's address. Complete verification with the received code to activate the sender.
+
+The sender can be created before the verification letter is sent. If sending the letter fails, retrieve the sender list before retrying creation.
 
 ### Example Usage
 
@@ -120,12 +123,13 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 400, 401, 403, 4XX       | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 400, 403, 409, 415, 4XX  | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |
 
 ## Delete
 
-Remove a sender from your account by `id`. Pass the sender’s `id` parameter to remove it. The sender is deleted immediately.
+Remove a sender using its system ID. The account's default sender must be retained.
 
 ### Example Usage
 
@@ -150,7 +154,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ErrorResponse != nil {
+    if res != nil {
         // handle response
     }
 }
@@ -172,12 +176,13 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 400, 401, 403, 404, 4XX  | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 400, 403, 404, 409, 4XX  | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |
 
 ## Verify
 
-Verify a sender to activate it. After adding a new sender, a letter containing a verification code is mailed to the sender’s address. Provide this code to complete verification.
+Activate a sender using the verification code received by mail. The code must match the current verification request, and the sender must still be awaiting verification.
 
 ### Example Usage
 
@@ -205,7 +210,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ErrorResponse != nil {
+    if res != nil {
         // handle response
     }
 }
@@ -226,8 +231,8 @@ func main() {
 
 ### Errors
 
-| Error Type               | Status Code              | Content Type             |
-| ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 404                      | application/json         |
-| apierrors.ErrorResponse  | 400, 401, 403, 4XX       | application/problem+json |
-| apierrors.ErrorResponse  | 5XX                      | application/problem+json |
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| apierrors.ErrorResponse      | 401, 405                     | application/problem+json     |
+| apierrors.ErrorResponse      | 400, 403, 404, 409, 415, 4XX | application/problem+json     |
+| apierrors.ErrorResponse      | 5XX                          | application/problem+json     |

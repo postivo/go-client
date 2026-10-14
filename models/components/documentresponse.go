@@ -7,7 +7,7 @@ type DocumentResponse struct {
 	// Document MIME type.
 	MimeType string `json:"mime_type"`
 	// Base64-encoded document content.
-	FileStream *string `json:"file_stream,omitempty"`
+	FileStream string `json:"file_stream"`
 }
 
 func (d *DocumentResponse) GetMimeType() string {
@@ -17,9 +17,9 @@ func (d *DocumentResponse) GetMimeType() string {
 	return d.MimeType
 }
 
-func (d *DocumentResponse) GetFileStream() *string {
+func (d *DocumentResponse) GetFileStream() string {
 	if d == nil {
-		return nil
+		return ""
 	}
 	return d.FileStream
 }

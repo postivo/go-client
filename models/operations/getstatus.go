@@ -4,11 +4,10 @@ package operations
 
 import (
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 type GetStatusRequest struct {
-	// Shipment IDs assigned by the system (comma-separated). The system accepts a maximum of **50** identifiers per call.
+	// Shipment IDs assigned by the system (comma-separated). The system accepts a maximum of **50** identifiers per call. Empty items, including leading, trailing or repeated commas, are rejected with HTTP 400. Surrounding whitespace is ignored and duplicate IDs are processed once.
 	Ids []string `pathParam:"style=simple,explode=true,name=ids"`
 }
 
@@ -23,8 +22,6 @@ type GetStatusResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// The request was processed successfully. Shipment details are included in the response body.
 	StatusDetails []components.StatusDetails
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
 	Headers       map[string][]string
 }
 
@@ -40,13 +37,6 @@ func (g *GetStatusResponse) GetStatusDetails() []components.StatusDetails {
 		return nil
 	}
 	return g.StatusDetails
-}
-
-func (g *GetStatusResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
-	if g == nil {
-		return nil
-	}
-	return g.ErrorResponse
 }
 
 func (g *GetStatusResponse) GetHeaders() map[string][]string {

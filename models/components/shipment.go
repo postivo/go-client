@@ -152,19 +152,19 @@ func (u ShipmentDocuments) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type ShipmentDocuments: all fields are null")
 }
 
-// InlineConfig - Shipment configuration parameters. Overrides settings loaded from `predefined_config_id`.
+// InlineConfig - Shipment configuration parameters. Overrides settings loaded from `predefined_config_id`. Explicit `false` disables the corresponding print option; omitted optional fields retain the profile setting.
 type InlineConfig struct {
-	// Preferred carrier identifier.
+	// Preferred carrier identifier. Use 0 to retain the profile setting or select the default carrier.
 	CarrierID int64 `json:"carrier_id"`
-	// Preferred service identifier (shipment type).
+	// Preferred service identifier (shipment type). Use 0 to retain the profile setting or select the default service.
 	ServiceID int64 `json:"service_id"`
-	// Preferred paper type identifier.
+	// Preferred paper type identifier. Omit or use 0 to retain the profile setting.
 	PaperID *int64 `json:"paper_id,omitempty"`
 	// Print documents in color (`true`) or grayscale (`false`).
 	ColorPrint *bool `json:"color_print,omitempty"`
 	// Print documents duplex (`true`) or single-sided (`false`).
 	DuplexPrint *bool `json:"duplex_print,omitempty"`
-	// Preferred envelope size/template identifier defined in the user account.
+	// Preferred envelope size/template identifier defined in the user account. Omit or use 0 to retain the profile setting.
 	EnvelopeID *int64 `json:"envelope_id,omitempty"`
 	// Print the envelope in color (`true`) or grayscale (`false`).
 	EnvelopeColorPrint *bool `json:"envelope_color_print,omitempty"`
@@ -280,9 +280,9 @@ func (u InlineConfigUnion) MarshalJSON() ([]byte, error) {
 
 // Callback - Per-shipment callback configuration. When set, overrides the global callback defined in the user account.
 type Callback struct {
-	// Callback target URL.
+	// Non-empty absolute HTTP or HTTPS callback target URL. Use percent encoding for characters such as spaces in paths.
 	URL string `json:"url"`
-	// Bearer token to include in callback requests for authentication.
+	// Bearer token to include in callback requests for authentication. Leading and trailing whitespace is removed before saving. An omitted, null, empty or whitespace-only token uses the account token. The string "0" overrides the account token. The submitted value can contain at most 255 characters.
 	UserToken optionalnullable.OptionalNullable[string] `default:"null" json:"user_token"`
 }
 
@@ -359,7 +359,7 @@ func (u CallbackUnion) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CallbackUnion: all fields are null")
 }
 
-// MiscInfo - Additional shipment metadata. At least one of `order_name` or `mpk` must be provided.
+// MiscInfo - Optional shipment metadata. An empty object is allowed. Omitted or null fields supply no metadata; the string "0" is preserved.
 type MiscInfo struct {
 	// MPK (“miejsce powstania kosztu”) — billing cost-center identifier to be included on invoices.
 	Mpk optionalnullable.OptionalNullable[string] `default:"null" json:"mpk"`
@@ -442,16 +442,16 @@ func (u MiscInfoUnion) MarshalJSON() ([]byte, error) {
 
 // ShipmentOptions - Additional shipment settings.
 type ShipmentOptions struct {
-	// ID of the shipment configuration profile stored in the user account.
+	// ID of the shipment configuration profile stored in the user account. Omit, use null or 0 to apply the default configuration; a positive ID selects a specific profile.
 	PredefinedConfigID optionalnullable.OptionalNullable[int64]             `json:"predefined_config_id,omitempty"`
 	InlineConfig       optionalnullable.OptionalNullable[InlineConfigUnion] `json:"inline_config,omitempty"`
-	// ID of the sender stored in the user account.
+	// ID of the sender stored in the user account. Omit, use null or 0 to select the default sender; a positive ID selects a specific sender.
 	SenderID optionalnullable.OptionalNullable[int64] `json:"sender_id,omitempty"`
-	// Scheduled dispatch date (ISO 8601).
+	// Scheduled dispatch date (YYYY-MM-DD). Omit to select the first allowed dispatch date. A supplied date must satisfy the API working-day rules. Null is not allowed.
 	DispatchDate *types.Date                                      `json:"dispatch_date,omitempty"`
 	Callback     optionalnullable.OptionalNullable[CallbackUnion] `json:"callback,omitempty"`
 	MiscInfo     optionalnullable.OptionalNullable[MiscInfoUnion] `json:"misc_info,omitempty"`
-	// If true, rotate all documents 180° before printing (barcodes will be printed on opposite margins).
+	// If true, rotate all documents 180° before printing (barcodes will be printed on opposite margins). Omit or use false to disable rotation. Null is not allowed.
 	RotateDocuments *bool `json:"rotate_documents,omitempty"`
 }
 

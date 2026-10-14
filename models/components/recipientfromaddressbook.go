@@ -13,7 +13,7 @@ type RecipientFromAddressBook struct {
 	ID int64 `json:"id"`
 	// User-assigned custom shipment ID.
 	CustomID optionalnullable.OptionalNullable[string] `default:"null" json:"custom_id"`
-	// Optional postscript printed above the recipient data on the envelope.
+	// Optional postscript printed above the recipient data on the envelope. The string "0" is preserved.
 	Postscript optionalnullable.OptionalNullable[string] `json:"postscript,omitempty"`
 }
 

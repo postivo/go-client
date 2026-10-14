@@ -4,15 +4,13 @@ package operations
 
 import (
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 type ListMetadataResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// The request was processed successfully. Metadata details are included in the response body.
 	MetadataResponse *components.MetadataResponse
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
+	Headers          map[string][]string
 }
 
 func (l *ListMetadataResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -29,9 +27,9 @@ func (l *ListMetadataResponse) GetMetadataResponse() *components.MetadataRespons
 	return l.MetadataResponse
 }
 
-func (l *ListMetadataResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
+func (l *ListMetadataResponse) GetHeaders() map[string][]string {
 	if l == nil {
-		return nil
+		return map[string][]string{}
 	}
-	return l.ErrorResponse
+	return l.Headers
 }

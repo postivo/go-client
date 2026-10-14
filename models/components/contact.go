@@ -27,9 +27,9 @@ type Contact struct {
 	Country optionalnullable.OptionalNullable[string] `default:"PL" json:"country"`
 	// Phone number (E.164 format recommended).
 	PhoneNumber optionalnullable.OptionalNullable[string] `json:"phone_number,omitempty"`
-	// Custom (external) contact ID; must be unique per contact.
+	// Custom (external) contact ID; must be unique per contact. Use at most 16 ASCII letters, digits, underscores or hyphens. An omitted, null or empty value removes the external ID. The string "0" is a valid ID and is preserved in writes, responses and external-ID routes.
 	ExtID optionalnullable.OptionalNullable[string] `json:"ext_id,omitempty"`
-	// IDs of groups the contact belongs to.
+	// Positive IDs of groups the contact belongs to. Missing or foreign groups are ignored.
 	GroupIds optionalnullable.OptionalNullable[[]int64] `json:"group_ids,omitempty"`
 }
 

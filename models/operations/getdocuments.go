@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 // DocumentType - Type of document/certificate to generate.
@@ -17,7 +16,7 @@ const (
 	DocumentTypeDispatchCert DocumentType = "dispatch_cert"
 	// DocumentTypeEnvelope Envelope template preview
 	DocumentTypeEnvelope DocumentType = "envelope"
-	// DocumentTypeEpoPdf EPO certificate in PDF format (Elektroniczne Potwierdzenie Odbioru)
+	// DocumentTypeEpoPdf EPO certificate visualization in PDF format (Elektroniczne Potwierdzenie Odbioru)
 	DocumentTypeEpoPdf DocumentType = "epo_pdf"
 	// DocumentTypeEpoXML EPO certificate in XML format (Elektroniczne Potwierdzenie Odbioru)
 	DocumentTypeEpoXML DocumentType = "epo_xml"
@@ -71,9 +70,7 @@ type GetDocumentsResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// The request was processed successfully. The document content is included in the response body.
 	DocumentResponse *components.DocumentResponse
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
-	Headers       map[string][]string
+	Headers          map[string][]string
 }
 
 func (g *GetDocumentsResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -88,13 +85,6 @@ func (g *GetDocumentsResponse) GetDocumentResponse() *components.DocumentRespons
 		return nil
 	}
 	return g.DocumentResponse
-}
-
-func (g *GetDocumentsResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
-	if g == nil {
-		return nil
-	}
-	return g.ErrorResponse
 }
 
 func (g *GetDocumentsResponse) GetHeaders() map[string][]string {

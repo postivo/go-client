@@ -4,15 +4,13 @@ package operations
 
 import (
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 type ListPredefinedConfigsResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// The request was processed successfully. Predefined configuration details are included in the response body.
 	PredefinedConfigs []components.PredefinedConfig
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
+	Headers           map[string][]string
 }
 
 func (l *ListPredefinedConfigsResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -29,9 +27,9 @@ func (l *ListPredefinedConfigsResponse) GetPredefinedConfigs() []components.Pred
 	return l.PredefinedConfigs
 }
 
-func (l *ListPredefinedConfigsResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
+func (l *ListPredefinedConfigsResponse) GetHeaders() map[string][]string {
 	if l == nil {
-		return nil
+		return map[string][]string{}
 	}
-	return l.ErrorResponse
+	return l.Headers
 }

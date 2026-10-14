@@ -2,26 +2,22 @@
 
 package components
 
-import (
-	"github.com/postivo/go-client/optionalnullable"
-)
-
 // StatusDetails - Details of a single shipment and its status events
 type StatusDetails struct {
 	// Single shipment details
-	ShipmentDetails *ShipmentDetails `json:"shipment_details,omitempty"`
+	ShipmentDetails ShipmentDetails `json:"shipment_details"`
 	// List of status events for the shipment.
-	StatusEvents optionalnullable.OptionalNullable[[]StatusEvent] `json:"status_events,omitempty"`
+	StatusEvents []StatusEvent `json:"status_events"`
 }
 
-func (s *StatusDetails) GetShipmentDetails() *ShipmentDetails {
+func (s *StatusDetails) GetShipmentDetails() ShipmentDetails {
 	if s == nil {
-		return nil
+		return ShipmentDetails{}
 	}
 	return s.ShipmentDetails
 }
 
-func (s *StatusDetails) GetStatusEvents() optionalnullable.OptionalNullable[[]StatusEvent] {
+func (s *StatusDetails) GetStatusEvents() []StatusEvent {
 	if s == nil {
 		return nil
 	}

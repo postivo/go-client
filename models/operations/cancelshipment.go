@@ -4,11 +4,10 @@ package operations
 
 import (
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 type CancelShipmentRequest struct {
-	// Shipment IDs assigned by the system (comma-separated). The system accepts a maximum of **50** identifiers per call.
+	// Shipment IDs assigned by the system (comma-separated). The system accepts a maximum of **50** identifiers per call. Empty items, including leading, trailing or repeated commas, are rejected with HTTP 400. Surrounding whitespace is ignored and duplicate IDs are processed once.
 	Ids []string `pathParam:"style=simple,explode=true,name=ids"`
 }
 
@@ -21,11 +20,9 @@ func (c *CancelShipmentRequest) GetIds() []string {
 
 type CancelShipmentResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
-	// The request was processed successfully. Check the shipment cancellation statuses in the response body.
+	// The batch was processed. Check every shipment cancellation status and X-Success-Count/X-Error-Count. Item statuses 404, 409 or 500 do not change the batch HTTP status 200.
 	ShipmentCancellations []components.ShipmentCancellation
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
-	Headers       map[string][]string
+	Headers               map[string][]string
 }
 
 func (c *CancelShipmentResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -40,13 +37,6 @@ func (c *CancelShipmentResponse) GetShipmentCancellations() []components.Shipmen
 		return nil
 	}
 	return c.ShipmentCancellations
-}
-
-func (c *CancelShipmentResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
-	if c == nil {
-		return nil
-	}
-	return c.ErrorResponse
 }
 
 func (c *CancelShipmentResponse) GetHeaders() map[string][]string {

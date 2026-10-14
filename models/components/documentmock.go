@@ -8,7 +8,7 @@ import (
 
 // DocumentMock - Mock document used to simulate page count for pricing without uploading a real file.
 type DocumentMock struct {
-	// Number of pages in the mock document.
+	// Number of pages in the mock document; at least one page is required.
 	Pages int64 `json:"pages"`
 }
 

@@ -4,7 +4,6 @@ package operations
 
 import (
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 type RemoveContactFromGroupRequest struct {
@@ -30,9 +29,7 @@ func (r *RemoveContactFromGroupRequest) GetGroupID() int64 {
 
 type RemoveContactFromGroupResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
-	Headers       map[string][]string
+	Headers  map[string][]string
 }
 
 func (r *RemoveContactFromGroupResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -40,13 +37,6 @@ func (r *RemoveContactFromGroupResponse) GetHTTPMeta() components.HTTPMetadata {
 		return components.HTTPMetadata{}
 	}
 	return r.HTTPMeta
-}
-
-func (r *RemoveContactFromGroupResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
-	if r == nil {
-		return nil
-	}
-	return r.ErrorResponse
 }
 
 func (r *RemoveContactFromGroupResponse) GetHeaders() map[string][]string {

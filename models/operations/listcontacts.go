@@ -5,7 +5,6 @@ package operations
 import (
 	"github.com/postivo/go-client/internal/utils"
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 type ListContactsRequest struct {
@@ -42,11 +41,9 @@ func (l *ListContactsRequest) GetLimit() *int64 {
 
 type ListContactsResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
-	// The request was processed successfully. Contact details are included in the response body.
+	// The request was processed successfully. The response contains an array of contacts, or an empty array for the first page of an empty address book.
 	ContactResponses []components.ContactResponse
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
-	Headers       map[string][]string
+	Headers          map[string][]string
 }
 
 func (l *ListContactsResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -61,13 +58,6 @@ func (l *ListContactsResponse) GetContactResponses() []components.ContactRespons
 		return nil
 	}
 	return l.ContactResponses
-}
-
-func (l *ListContactsResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
-	if l == nil {
-		return nil
-	}
-	return l.ErrorResponse
 }
 
 func (l *ListContactsResponse) GetHeaders() map[string][]string {

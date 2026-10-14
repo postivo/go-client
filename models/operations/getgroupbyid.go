@@ -4,7 +4,6 @@ package operations
 
 import (
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 type GetGroupByIDRequest struct {
@@ -23,8 +22,7 @@ type GetGroupByIDResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// The request was processed successfully. Group details are included in the response body.
 	GroupResponse *components.GroupResponse
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
+	Headers       map[string][]string
 }
 
 func (g *GetGroupByIDResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -41,9 +39,9 @@ func (g *GetGroupByIDResponse) GetGroupResponse() *components.GroupResponse {
 	return g.GroupResponse
 }
 
-func (g *GetGroupByIDResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
+func (g *GetGroupByIDResponse) GetHeaders() map[string][]string {
 	if g == nil {
-		return nil
+		return map[string][]string{}
 	}
-	return g.ErrorResponse
+	return g.Headers
 }

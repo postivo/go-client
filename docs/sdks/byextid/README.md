@@ -12,7 +12,7 @@
 
 ## Get
 
-Get the details of a contact from your Address Book using your external (custom) ID (the value you defined when creating the contact).
+Get the details of an Address Book contact using its external (custom) ID, assigned when the contact was created.
 
 ### Example Usage
 
@@ -59,12 +59,13 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 400, 401, 404, 4XX       | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 400, 404, 4XX            | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |
 
 ## Update
 
-Update a contact by its external (custom) ID - the value you defined when creating the contact.
+Update an Address Book contact using its external (custom) ID, assigned when the contact was created. Submitting unchanged details leaves the contact unchanged.
 
 ### Example Usage
 
@@ -117,7 +118,7 @@ func main() {
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
 | `extID`                                                  | `string`                                                 | :heavy_check_mark:                                       | External (custom) ID of the contact to update.           | my-id-2                                                  |
-| `contact`                                                | [components.Contact](../../models/components/contact.md) | :heavy_check_mark:                                       | A `Contact` object with the updated fields.              |                                                          |
+| `contact`                                                | [components.Contact](../../models/components/contact.md) | :heavy_check_mark:                                       | Updated contact details.                                 |                                                          |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
 ### Response
@@ -126,14 +127,15 @@ func main() {
 
 ### Errors
 
-| Error Type               | Status Code              | Content Type             |
-| ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 400, 401, 403, 404, 4XX  | application/problem+json |
-| apierrors.ErrorResponse  | 5XX                      | application/problem+json |
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| apierrors.ErrorResponse      | 401, 405                     | application/problem+json     |
+| apierrors.ErrorResponse      | 400, 403, 404, 409, 415, 4XX | application/problem+json     |
+| apierrors.ErrorResponse      | 5XX                          | application/problem+json     |
 
 ## Delete
 
-Remove a contact from your account by its external (custom) ID - the value defined when the contact was created.
+Remove an Address Book contact using its external (custom) ID, assigned when the contact was created.
 
 ### Example Usage
 
@@ -158,7 +160,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ErrorResponse != nil {
+    if res != nil {
         // handle response
     }
 }
@@ -180,12 +182,13 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 400, 401, 403, 404, 4XX  | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 400, 403, 404, 4XX       | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |
 
 ## RemoveFromGroup
 
-Remove a contact from a group in your Address Book using the contact’s external (custom) ID. This operation does not delete the contact; it only detaches the contact from the group. Provide the contact’s `ext_id` and the group’s `group_id` parameters to perform the detachment.
+Remove a contact from an Address Book group using the contact's external (custom) ID and the group's system ID. The contact remains in the Address Book.
 
 ### Example Usage
 
@@ -210,7 +213,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ErrorResponse != nil {
+    if res != nil {
         // handle response
     }
 }
@@ -233,15 +236,13 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 404                      | application/json         |
-| apierrors.ErrorResponse  | 400, 401, 403, 4XX       | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 400, 403, 404, 4XX       | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |
 
 ## AddToGroup
 
-Assign a contact to a group using the contact’s external (custom) ID (assigned when creating the contact). If a contact and a group exist in your account, you can add the contact to that group.
-
-Provide the contact’s `ext_id` and the group’s `group_id` parameters to perform the assignment.
+Assign a contact to an Address Book group using the contact's external (custom) ID and the group's system ID. Both the contact and the group must exist in your Address Book.
 
 ### Example Usage
 
@@ -266,7 +267,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ErrorResponse != nil {
+    if res != nil {
         // handle response
     }
 }
@@ -289,6 +290,6 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 404                      | application/json         |
-| apierrors.ErrorResponse  | 400, 401, 403, 4XX       | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 400, 403, 404, 4XX       | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |

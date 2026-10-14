@@ -4,13 +4,12 @@ package operations
 
 import (
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 type UpdateContactRequest struct {
 	// ID of the contact to update.
 	ID int64 `pathParam:"style=simple,explode=false,name=id"`
-	// A `Contact` object with the updated fields.
+	// Updated contact details.
 	Contact components.Contact `request:"mediaType=application/json"`
 }
 
@@ -32,9 +31,7 @@ type UpdateContactResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// The request was processed successfully (contact updated).
 	ContactResponse *components.ContactResponse
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
-	Headers       map[string][]string
+	Headers         map[string][]string
 }
 
 func (u *UpdateContactResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -49,13 +46,6 @@ func (u *UpdateContactResponse) GetContactResponse() *components.ContactResponse
 		return nil
 	}
 	return u.ContactResponse
-}
-
-func (u *UpdateContactResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
-	if u == nil {
-		return nil
-	}
-	return u.ErrorResponse
 }
 
 func (u *UpdateContactResponse) GetHeaders() map[string][]string {

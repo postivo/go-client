@@ -10,7 +10,7 @@ Common
 
 ## Ping
 
-Check the API connection and current availability status. The response also includes the current API version.
+Check the connection to Postivo and service availability. The result also includes the current API version.
 
 ### Example Usage
 
@@ -54,5 +54,6 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
+| apierrors.ErrorResponse  | 405                      | application/problem+json |
 | apierrors.ErrorResponse  | 400, 4XX                 | application/problem+json |
-| apierrors.ErrorResponse  | 503, 5XX                 | application/problem+json |
+| apierrors.ErrorResponse  | 5XX                      | application/problem+json |

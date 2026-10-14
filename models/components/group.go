@@ -10,7 +10,7 @@ import (
 type Group struct {
 	// Group name.
 	Name string `json:"name"`
-	// Optional group description.
+	// Optional group description. An omitted, null or empty value clears the description; the string "0" is preserved.
 	Description optionalnullable.OptionalNullable[string] `json:"description,omitempty"`
 }
 

@@ -55,12 +55,13 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 401, 403, 4XX            | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 403, 4XX                 | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |
 
 ## GetSubaccount
 
-Check the account balance and other details, such as the subcredit balance of a subaccount. Subaccounts are additional users who can access your account’s services and data. You can restrict access levels and set privileges for subaccounts in the [User Panel](https://panel.postivo.pl).
+Check the account balance and other details, such as the subcredit balance of a subaccount. Subaccounts are additional users who can access your account's services and data. You can restrict access levels and set privileges for subaccounts in the [User Panel](https://panel.postivo.pl).
 
 Provide the full subaccount login to access its data.
 
@@ -109,5 +110,6 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 401, 403, 404, 4XX       | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 403, 404, 4XX            | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |

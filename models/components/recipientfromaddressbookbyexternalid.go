@@ -9,13 +9,13 @@ import (
 
 // RecipientFromAddressBookByExternalID - Select shipment recipient data from the Address Book by external (custom) ID.
 type RecipientFromAddressBookByExternalID struct {
-	// External (custom) ID of the recipient stored in your Address Book.
+	// External (custom) ID of the recipient stored in your Address Book. Use 1–16 ASCII letters, digits, underscores or hyphens; the string "0" is valid. An invalid format rejects the request with HTTP 400; an unavailable recipient with a valid ID remains an item processing error.
 	ExtID string `json:"ext_id"`
-	// Set to true to fetch recipient data by external ID from inherited main account’s Address Book.
+	// Set to true to fetch recipient data by external ID from inherited main account’s Address Book when permitted. Omit or use false to select your own Address Book. Null is not allowed.
 	Inherited *bool `default:"false" json:"inherited"`
 	// Custom shipment ID assigned by the user.
 	CustomID optionalnullable.OptionalNullable[string] `default:"null" json:"custom_id"`
-	// Optional postscript printed above the recipient data on the envelope.
+	// Optional postscript printed above the recipient data on the envelope. The string "0" is preserved.
 	Postscript optionalnullable.OptionalNullable[string] `json:"postscript,omitempty"`
 }
 

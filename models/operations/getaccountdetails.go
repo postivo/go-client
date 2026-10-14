@@ -4,15 +4,13 @@ package operations
 
 import (
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 type GetAccountDetailsResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// The request was processed successfully
 	AccountResponse *components.AccountResponse
-	// Unauthorized.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
+	Headers         map[string][]string
 }
 
 func (g *GetAccountDetailsResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -29,9 +27,9 @@ func (g *GetAccountDetailsResponse) GetAccountResponse() *components.AccountResp
 	return g.AccountResponse
 }
 
-func (g *GetAccountDetailsResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
+func (g *GetAccountDetailsResponse) GetHeaders() map[string][]string {
 	if g == nil {
-		return nil
+		return map[string][]string{}
 	}
-	return g.ErrorResponse
+	return g.Headers
 }

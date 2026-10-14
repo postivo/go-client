@@ -4,15 +4,13 @@ package operations
 
 import (
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 type PingResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// API service is available.
 	PingResponse *components.PingResponse
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
+	Headers      map[string][]string
 }
 
 func (p *PingResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -29,9 +27,9 @@ func (p *PingResponse) GetPingResponse() *components.PingResponse {
 	return p.PingResponse
 }
 
-func (p *PingResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
+func (p *PingResponse) GetHeaders() map[string][]string {
 	if p == nil {
-		return nil
+		return map[string][]string{}
 	}
-	return p.ErrorResponse
+	return p.Headers
 }

@@ -4,7 +4,6 @@ package operations
 
 import (
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 // VerifySenderRequestBody - Verification code received in the letter.
@@ -42,9 +41,7 @@ func (v *VerifySenderRequest) GetRequestBody() VerifySenderRequestBody {
 
 type VerifySenderResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
-	Headers       map[string][]string
+	Headers  map[string][]string
 }
 
 func (v *VerifySenderResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -52,13 +49,6 @@ func (v *VerifySenderResponse) GetHTTPMeta() components.HTTPMetadata {
 		return components.HTTPMetadata{}
 	}
 	return v.HTTPMeta
-}
-
-func (v *VerifySenderResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
-	if v == nil {
-		return nil
-	}
-	return v.ErrorResponse
 }
 
 func (v *VerifySenderResponse) GetHeaders() map[string][]string {

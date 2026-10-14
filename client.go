@@ -2,7 +2,7 @@
 
 package postivo
 
-// Generated from OpenAPI doc version 1.0.4 and generator version 2.943.0
+// Generated from OpenAPI doc version 1.1.1 and generator version 2.948.4
 
 import (
 	"context"
@@ -55,6 +55,9 @@ func Float64(f float64) *float64 { return &f }
 // Pointer provides a helper function to return a pointer to a type
 func Pointer[T any](v T) *T { return &v }
 
+// Client
+//
+// https://api.postivo.pl/problems/ - Error catalog and operation results
 type Client struct {
 	SDKVersion  string
 	Accounts    *Accounts
@@ -141,12 +144,12 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *Client {
 	sdk := &Client{
-		SDKVersion: "0.3.1",
+		SDKVersion: "0.4.11",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:         "speakeasy-sdk/go 0.3.1 2.943.0 1.0.4 github.com/postivo/go-client",
-			SDKVersion:        "0.3.1",
-			GenVersion:        "2.943.0",
-			OpenAPIDocVersion: "1.0.4",
+			UserAgent:         "speakeasy-sdk/go 0.4.11 2.948.4 1.1.1 github.com/postivo/go-client",
+			SDKVersion:        "0.4.11",
+			GenVersion:        "2.948.4",
+			OpenAPIDocVersion: "1.1.1",
 			ServerList:        ServerList,
 		},
 		hooks: hooks.New(),

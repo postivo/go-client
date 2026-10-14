@@ -27,7 +27,7 @@ type Recipient struct {
 	Country optionalnullable.OptionalNullable[string] `default:"PL" json:"country"`
 	// Phone number (E.164 format recommended).
 	PhoneNumber optionalnullable.OptionalNullable[string] `json:"phone_number,omitempty"`
-	// Optional postscript printed above the recipient data on the envelope.
+	// Optional postscript printed above the recipient data on the envelope. The string "0" is preserved.
 	Postscript optionalnullable.OptionalNullable[string] `json:"postscript,omitempty"`
 }
 

@@ -4,16 +4,13 @@ package operations
 
 import (
 	"github.com/postivo/go-client/models/components"
-	"github.com/postivo/go-client/optionalnullable"
 )
 
 type AddContactResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// The request was processed successfully (contact added).
 	ContactResponse *components.ContactResponse
-	// Invalid request.
-	ErrorResponse optionalnullable.OptionalNullable[components.ErrorResponse]
-	Headers       map[string][]string
+	Headers         map[string][]string
 }
 
 func (a *AddContactResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -28,13 +25,6 @@ func (a *AddContactResponse) GetContactResponse() *components.ContactResponse {
 		return nil
 	}
 	return a.ContactResponse
-}
-
-func (a *AddContactResponse) GetErrorResponse() optionalnullable.OptionalNullable[components.ErrorResponse] {
-	if a == nil {
-		return nil
-	}
-	return a.ErrorResponse
 }
 
 func (a *AddContactResponse) GetHeaders() map[string][]string {

@@ -388,10 +388,11 @@ By Default, an API error will return `apierrors.APIError`. When custom error res
 
 For example, the `Get` function may return the following errors:
 
-| Error Type              | Status Code   | Content Type             |
-| ----------------------- | ------------- | ------------------------ |
-| apierrors.ErrorResponse | 401, 403, 4XX | application/problem+json |
-| apierrors.ErrorResponse | 5XX           | application/problem+json |
+| Error Type              | Status Code | Content Type             |
+| ----------------------- | ----------- | ------------------------ |
+| apierrors.ErrorResponse | 401, 405    | application/problem+json |
+| apierrors.ErrorResponse | 403, 4XX    | application/problem+json |
+| apierrors.ErrorResponse | 5XX         | application/problem+json |
 
 ### Example
 
@@ -415,6 +416,12 @@ func main() {
 
 	res, err := s.Accounts.Get(ctx)
 	if err != nil {
+
+		var e *apierrors.ErrorResponse
+		if errors.As(err, &e) {
+			// handle error
+			log.Fatal(e.Error())
+		}
 
 		var e *apierrors.ErrorResponse
 		if errors.As(err, &e) {

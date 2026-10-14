@@ -12,7 +12,7 @@
 
 ## List
 
-Retrieve the full list of groups defined in your account’s Address Book.
+Retrieve all contact groups defined in your account's Address Book. An Address Book without groups returns an empty list.
 
 ### Example Usage
 
@@ -58,12 +58,13 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 400, 401, 403, 4XX       | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 400, 403, 4XX            | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |
 
 ## Add
 
-Create a new contact group in your account’s Address Book.
+Create a new contact group in your account's Address Book.
 
 ### Example Usage
 
@@ -115,12 +116,13 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 400, 401, 403, 4XX       | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 400, 403, 415, 4XX       | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |
 
 ## Get
 
-Get the details of a single group from your Address Book by its `id` (returned when the group was created).
+Get the details of an Address Book group using the system ID assigned when the group was created.
 
 ### Example Usage
 
@@ -167,12 +169,13 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 400, 401, 404, 4XX       | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 400, 404, 4XX            | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |
 
 ## Update
 
-Update a group’s details by ID.
+Update an Address Book group using its system ID. Submitting unchanged details leaves the group unchanged.
 
 ### Example Usage
 
@@ -214,7 +217,7 @@ func main() {
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
 | `id`                                                     | `int64`                                                  | :heavy_check_mark:                                       | Group `id` to update.                                    | 14                                                       |
-| `group`                                                  | [components.Group](../../models/components/group.md)     | :heavy_check_mark:                                       | A `Group` object with the updated fields.                |                                                          |
+| `group`                                                  | [components.Group](../../models/components/group.md)     | :heavy_check_mark:                                       | Updated contact group details.                           |                                                          |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
 ### Response
@@ -225,14 +228,13 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 400, 401, 403, 404, 4XX  | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 400, 403, 404, 415, 4XX  | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |
 
 ## Delete
 
-Remove a group from your account’s Address Book by `ID`. Pass the group’s `id` to remove it. The group is deleted immediately from the Address Book.
-
-If you also want to remove contacts that belong to this group, set the parameter `contacts` to `delete`. The default is `contacts: detach`, which detaches contacts from the removed group but leaves them in the Address Book.
+Remove an Address Book group using its system ID. By default, its contacts remain in the Address Book and their membership in the removed group is cleared. You can also choose to delete the contacts belonging to the group.
 
 ### Example Usage
 
@@ -258,7 +260,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ErrorResponse != nil {
+    if res != nil {
         // handle response
     }
 }
@@ -281,5 +283,6 @@ func main() {
 
 | Error Type               | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| apierrors.ErrorResponse  | 400, 401, 403, 404, 4XX  | application/problem+json |
+| apierrors.ErrorResponse  | 401, 405                 | application/problem+json |
+| apierrors.ErrorResponse  | 400, 403, 404, 4XX       | application/problem+json |
 | apierrors.ErrorResponse  | 5XX                      | application/problem+json |

@@ -2,35 +2,31 @@
 
 package components
 
-import (
-	"github.com/postivo/go-client/optionalnullable"
-)
-
 // ShipmentCancellation - Result of cancelling a single shipment
 type ShipmentCancellation struct {
 	// Shipment ID.
-	ID *string `json:"id,omitempty"`
-	// Cancellation status code (`204` if cancelled successfully; otherwise an error code).
-	Status *int64 `json:"status,omitempty"`
-	// Problem Details object (RFC 9457) describing the error.
-	Error optionalnullable.OptionalNullable[ErrorResponse] `json:"error,omitempty"`
+	ID string `json:"id"`
+	// Per-shipment status: `204` when cancelled, `404` when missing, `409` when the current state prevents cancellation, `500` after a technical failure whose transaction was successfully rolled back. A processed batch returns HTTP 200.
+	Status int64 `json:"status"`
+	// Problem Details object (RFC 9457) describing the error. See the [error catalog](https://api.postivo.pl/problems/) for problem types and recovery steps.
+	Error *ErrorResponse `json:"error"`
 }
 
-func (s *ShipmentCancellation) GetID() *string {
+func (s *ShipmentCancellation) GetID() string {
 	if s == nil {
-		return nil
+		return ""
 	}
 	return s.ID
 }
 
-func (s *ShipmentCancellation) GetStatus() *int64 {
+func (s *ShipmentCancellation) GetStatus() int64 {
 	if s == nil {
-		return nil
+		return 0
 	}
 	return s.Status
 }
 
-func (s *ShipmentCancellation) GetError() optionalnullable.OptionalNullable[ErrorResponse] {
+func (s *ShipmentCancellation) GetError() *ErrorResponse {
 	if s == nil {
 		return nil
 	}
